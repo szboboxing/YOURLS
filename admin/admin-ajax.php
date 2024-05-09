@@ -18,13 +18,13 @@ switch( $action ) {
 
 	case 'add':
 		yourls_verify_nonce( 'add_url', $_REQUEST['nonce'], false, 'omg error' );
-		$return = yourls_add_new_link( $_REQUEST['url'], $_REQUEST['keyword'] );
+		$return = yourls_add_new_link( $_REQUEST['url'], $_REQUEST['keyword'], '', $_REQUEST['rowid'] );
 		echo json_encode($return);
 		break;
 
 	case 'edit_display':
 		yourls_verify_nonce( 'edit-link_'.$_REQUEST['id'], $_REQUEST['nonce'], false, 'omg error' );
-		$row = yourls_table_edit_row ( $_REQUEST['keyword'] );
+		$row = yourls_table_edit_row ( $_REQUEST['keyword'], $_REQUEST['id'] );
 		echo json_encode( array('html' => $row) );
 		break;
 

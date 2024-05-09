@@ -110,10 +110,10 @@ if ( isset( $_GET['u'] ) or isset( $_GET['up'] ) ) {
 	// No sanitization needed here: everything happens in yourls_add_new_link()
 	if( isset( $_GET['u'] ) ) {
 		// Old school bookmarklet: ?u=<url>
-		$url = urldecode( $_GET['u'] );
+		$url = $_GET['u'];
 	} else {
 		// New style bookmarklet: ?up=<url protocol>&us=<url slashes>&ur=<url rest>
-		$url = urldecode( $_GET['up'] . $_GET['us'] . $_GET['ur'] );
+		$url = $_GET['up'] . $_GET['us'] . $_GET['ur'];
 	}
 	$keyword = ( isset( $_GET['k'] ) ? ( $_GET['k'] ) : '' );
 	$title   = ( isset( $_GET['t'] ) ? ( $_GET['t'] ) : '' );
@@ -157,7 +157,7 @@ if ( isset( $_GET['u'] ) or isset( $_GET['up'] ) ) {
 
 				// Deal with the case when redirection failed:
 				$return['status']    = 'error';
-				$return['errorCode'] = 400;
+				$return['errorCode'] = '400';
 				$return['message']   = yourls_s( 'Short URL created, but could not redirect to %s !', 'Twitter' );
 				break;
 
@@ -168,7 +168,7 @@ if ( isset( $_GET['u'] ) or isset( $_GET['up'] ) ) {
 
 				// Deal with the case when redirection failed:
 				$return['status']    = 'error';
-				$return['errorCode'] = 400;
+				$return['errorCode'] = '400';
 				$return['message']   = yourls_s( 'Short URL created, but could not redirect to %s !', 'Facebook' );
 				break;
 
@@ -179,7 +179,7 @@ if ( isset( $_GET['u'] ) or isset( $_GET['up'] ) ) {
 
 				// Deal with the case when redirection failed:
 				$return['status']    = 'error';
-				$return['errorCode'] = 400;
+				$return['errorCode'] = '400';
 				$return['message']   = yourls_s( 'Short URL created, but could not redirect to %s !', 'Tumblr' );
 				break;
 
@@ -189,7 +189,7 @@ if ( isset( $_GET['u'] ) or isset( $_GET['up'] ) ) {
 
 				// Still here? That was an unknown 'share' method, then.
 				$return['status']    = 'error';
-				$return['errorCode'] = 400;
+				$return['errorCode'] = '400';
 				$return['message']   = yourls__( 'Unknown "Share" bookmarklet' );
 				break;
 		}
@@ -227,7 +227,7 @@ if ( isset( $_GET['u'] ) or isset( $_GET['up'] ) ) {
 		$display_on_page = ( $offset + 1 );
 	}
 
-	// Determing Total Amount Of Pages
+	// Determine Total Amount Of Pages
 	$total_pages = ceil( $total_items / $perpage );
 }
 
@@ -292,7 +292,7 @@ yourls_table_tbody_start();
 
 // Main Query
 $where = yourls_apply_filter( 'admin_list_where', $where );
-$url_results = yourls_get_db()->fetchObjects( "SELECT * FROM `$table_url` WHERE 1=1 ${where['sql']} ORDER BY `$sort_by` $sort_order LIMIT $offset, $perpage;", $where['binds'] );
+$url_results = yourls_get_db()->fetchObjects( "SELECT * FROM `$table_url` WHERE 1=1 {$where['sql']} ORDER BY `$sort_by` $sort_order LIMIT $offset, $perpage;", $where['binds'] );
 $found_rows = false;
 if( $url_results ) {
 	$found_rows = true;
